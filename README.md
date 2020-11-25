@@ -42,6 +42,3 @@ This project is licensed from MIT.
 ## Authors
 Clément Depond, Adèle Lecler, Théo Lévêque, Sadou Barry, Jean Zamble.
 
-
-
-Translated with www.DeepL.com/Translator (free version)
