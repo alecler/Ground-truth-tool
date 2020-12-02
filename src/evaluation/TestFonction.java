@@ -4,7 +4,9 @@ import com.opencsv.CSVReader;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,7 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestFonction {
 
-    public TestFonction(){}
+    List<Error> errors;
+    List<Boolean> checks;
+
+    public TestFonction(){
+        errors = new ArrayList<>();
+        checks = new ArrayList<>();
+    }
 
     public int countRows(String file){
 
@@ -98,13 +106,17 @@ public class TestFonction {
             check =value1.equalsIgnoreCase(value2);
 
             if (!check){
-                return false;
+
+                errors.add(new Error(key, value1, value2));
+
+            }else {
+                checks.add(true);
             }
 
 
         }
 
-        return true;
+        return checks.contains(true);
     }
     //a.replaceAll("\\s+","").equalsIgnoreCase(b.replaceAll("\\s+",""))
     //e.getValue().replaceAll("\\t"," ").equalsIgnoreCase(m2.get(e.getKey()))
