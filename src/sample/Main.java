@@ -13,6 +13,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Ground truth tool");
         primaryStage.setScene(new Scene(root, 842, 662));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

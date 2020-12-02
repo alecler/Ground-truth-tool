@@ -1,5 +1,6 @@
 package sample;
 
+import com.opencsv.CSVReader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,15 +28,37 @@ public class Controller {
     }
 
     public void displayValue() throws IOException {
-        File file = new File("D:\\test.txt");
+        File file = new File("src/output/terrain/Esperanto_and_Interlingua_1.csv");
 
-        BufferedReader br = new BufferedReader(new FileReader(file));
+        //BufferedReader br = new BufferedReader(new FileReader(file));
+
 
         String st;
-        String result = "";
-        while ((st = br.readLine()) != null) {
-            result += st + "\n";
+        StringBuilder result = new StringBuilder();
+
+        try {
+            FileReader fr = new FileReader(file);
+            CSVReader csvReader = new CSVReader(fr);
+            String[] nextRecord;
+            StringBuilder line = new StringBuilder();
+
+            while ((nextRecord = csvReader.readNext()) != null){
+                for (String cell : nextRecord) {
+                    line.append(cell).append(" ");
+                }
+                result.append(line.toString()).append("\n");
+            }
+        }catch (Exception e){
+            System.err.println(e.getMessage());
         }
+
+
+        /*String st;
+        String result = "";*/
+       /* while ((st = br.readLine()) != null) {
+            result += st + "\n";
+        }*/
+
         String extractor = cb.getValue();
         String url = goodUrl.getText();
         List<String> liste_line = new ArrayList<String>();
@@ -44,7 +67,7 @@ public class Controller {
             ta.setText("Select an extractor");
         } else {
             ta.setText("Vous avez choisi : " + extractor + "\n" + "Ouverture de la page : " + url);
-            ta2.setText(result);
+            ta2.setText(result.toString());
         }
 
 
