@@ -12,7 +12,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Ground truth tool");
-        primaryStage.setScene(new Scene(root, 662, 842));
+        primaryStage.setScene(new Scene(root, 842, 662));
         primaryStage.show();
     }
 
