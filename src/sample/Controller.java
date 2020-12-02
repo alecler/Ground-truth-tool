@@ -13,8 +13,11 @@ import java.util.List;
 
 public class Controller {
     ObservableList list = FXCollections.observableArrayList("Java - Wikitext", "Java - HTML", "Python - HTML");
+    ObservableList list2 = FXCollections.observableArrayList("0", "1", "2");
     @FXML
     private ChoiceBox<String> cb;
+    @FXML
+    private ChoiceBox<String> cb2;
     @FXML
     private TextArea ta;
     @FXML
@@ -25,6 +28,7 @@ public class Controller {
     @FXML
     public void initialize() {
         cb.setItems(list);
+        cb2.setItems(list2);
     }
 
     public void displayValue() throws IOException {
