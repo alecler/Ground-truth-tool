@@ -238,6 +238,20 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="sample.Main" />
+      <module name="SP2" />
+      <option name="VM_PARAMETERS" value="--module-path         &quot;$USER_HOME$/Vidéos/javafx-sdk-11.0.2/lib/&quot;         --add-modules=javafx.controls,javafx.fxml" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="sample.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="sample.Main" />
       <module name="SP2" />
@@ -281,22 +295,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestFonction.isSame" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="SP2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="evaluation.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="evaluation" />
-      <option name="MAIN_CLASS_NAME" value="evaluation.TestFonction" />
-      <option name="METHOD_NAME" value="isSame" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TestFonction.testCountCols2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="SP2" />
       <extension name="coverage">
@@ -315,18 +313,17 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="JUnit.TestFonction.isSame" />
+      <item itemvalue="Application.Main (1)" />
       <item itemvalue="JUnit.TestFonction.testCountCols2" />
       <item itemvalue="JUnit.TestFonction" />
-      <item itemvalue="Application.Main (1)" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main (1)" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main (1)" />
         <item itemvalue="JUnit.TestFonction" />
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.TestFonction.isSame" />
       </list>
     </recent_temporary>
   </component>
