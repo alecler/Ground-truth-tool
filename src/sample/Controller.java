@@ -29,8 +29,6 @@ public class Controller {
     @FXML
     private TextArea ta;
     @FXML
-    private TextArea ta2;
-    @FXML
     private TextField goodUrl;
     @FXML
     private GridPane monGridPane;
@@ -40,9 +38,9 @@ public class Controller {
         cb.setItems(list);
     }
 
-    private void charger(String path){
+    private void charger(String path) {
 
-        HashMap<Integer, String> file= new TestFonction().fileToMap(path);
+        HashMap<Integer, String> file = new TestFonction().fileToMap(path);
 
         int lines = file.size();
         int cols = file.get(0).split("####").length;
@@ -62,43 +60,63 @@ public class Controller {
         }
     }
 
-    public void ListerRepertoire(){
-        File repertoire = new File("C:/Users/cleme/IdeaProjects/Ground-truth-tool/src/output/generer");
-        ObservableList list1 = FXCollections.observableArrayList();
-        String liste[] = repertoire.list();
+    public void ListerRepertoire() {
+        if (cb.getValue() == "Java - Wikitext") {
+            File repertoire = new File("./outputJava/wikitext");
+            ObservableList list1 = FXCollections.observableArrayList();
+            String liste[] = repertoire.list();
 
-        if (liste != null) {
-            for (int i = 0; i < liste.length; i++) {
-                String url = liste[i].substring(0, liste[i].length()-4);
-                String url1 = goodUrl.getText();
-                url1 = url1.substring(30, url1.length());
-                if (url.contains(url1)) {
-                    list1.add(url);
+            if (liste != null) {
+                for (int i = 0; i < liste.length; i++) {
+                    String url = liste[i].substring(0, liste[i].length() - 4);
+                    String url1 = goodUrl.getText();
+                    url1 = url1.substring(30, url1.length());
+                    if (url.contains(url1)) {
+                        list1.add(url);
+                    }
                 }
+            } else {
+                System.err.println("Nom de repertoire invalide");
             }
+            cb2.setItems(list1);
         } else {
-            System.err.println("Nom de repertoire invalide");
+            File repertoire = new File("./outputJava/html");
+            ObservableList list1 = FXCollections.observableArrayList();
+            String liste[] = repertoire.list();
+
+            if (liste != null) {
+                for (int i = 0; i < liste.length; i++) {
+                    String url = liste[i].substring(0, liste[i].length() - 4);
+                    String url1 = goodUrl.getText();
+                    url1 = url1.substring(30, url1.length());
+                    if (url.contains(url1)) {
+                        list1.add(url);
+                    }
+                }
+            } else {
+                System.err.println("Nom de repertoire invalide");
+            }
+            cb2.setItems(list1);
         }
-        cb2.setItems(list1);
     }
 
-    public void saveAsList(){
+    public void saveAsList() {
 
         int rows = monGridPane.getRowCount();
         int cols = monGridPane.getColumnCount();
-        System.out.println("lignes = "+rows + " colonnes = "+cols);
+        System.out.println("lignes = " + rows + " colonnes = " + cols);
 
         List<String> list = new ArrayList<>();
         List<List<String>> listCSV = new ArrayList<>();
 
-        for (Node n: monGridPane.getChildren()){
-            TextField txt = (TextField)n;
+        for (Node n : monGridPane.getChildren()) {
+            TextField txt = (TextField) n;
             list.add(txt.getText());
         }
 
         for (int i = 0; i < rows; i++) {
-            List sub=list.subList(0,3);
-            List two=new ArrayList<String>(sub);
+            List sub = list.subList(0, 3);
+            List two = new ArrayList<String>(sub);
             sub.clear();
             listCSV.add(two);
         }
@@ -106,21 +124,19 @@ public class Controller {
         saveCSV(listCSV);
     }
 
-    public void saveCSV(List<List<String>> data){
+    public void saveCSV(List<List<String>> data) {
 
         try {
-            CSVWriter writer = new CSVWriter(new FileWriter(System.getProperty("user.dir")+"", false));
+            CSVWriter writer = new CSVWriter(new FileWriter(System.getProperty("user.dir") + "/finalCSV.csv", false));
 
 
-            for(List<String> l: data){
+            for (List<String> l : data) {
                 String[] array = new String[l.size()];
                 l.toArray(array);
                 writer.writeNext(array);
             }
 
             writer.close();
-
-
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -129,9 +145,6 @@ public class Controller {
 
     public void displayValue() throws IOException {
         File file = new File("src/output/terrain/Esperanto_and_Interlingua_1.csv");
-
-        //BufferedReader br = new BufferedReader(new FileReader(file));
-
 
         String st;
         StringBuilder result = new StringBuilder();
@@ -142,22 +155,15 @@ public class Controller {
             String[] nextRecord;
             StringBuilder line = new StringBuilder();
 
-            while ((nextRecord = csvReader.readNext()) != null){
+            while ((nextRecord = csvReader.readNext()) != null) {
                 for (String cell : nextRecord) {
                     line.append(cell).append(" ");
                 }
                 result.append(line.toString()).append("\n");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
-
-
-        /*String st;
-        String result = "";*/
-       /* while ((st = br.readLine()) != null) {
-            result += st + "\n";
-        }*/
 
         String extractor = cb.getValue();
         String url = goodUrl.getText();
@@ -167,41 +173,33 @@ public class Controller {
             ta.setText("Select an extractor");
         } else {
             ta.setText("Vous avez choisi : " + extractor + "\n" + "Ouverture de la page : " + url);
-            /*ta2.setText(result.toString());*/
-
-//            charger();
         }
-        ListerRepertoire();
     }
 
     public void displayExtractedFile() throws IOException {
-
-
-
         String extractor = cb.getValue();
         String url = goodUrl.getText();
         String dir = "outputPython/";
         String name = getNameFromUrl(url);
         String format = "html";
-        //BufferedReader br = new BufferedReader(new FileReader(file));
 
         switch (extractor) {
             case "Python - HTML":
                 dir = "outputPython/";
                 break;
             case "Java - HTML":
-                dir = System.getProperty("user.dir")+"/outputJava/html/";
+                dir = System.getProperty("user.dir") + "/outputJava/html/";
                 format = "html";
                 break;
             case "Java - Wikitext":
-                dir = System.getProperty("user.dir")+"/outputJava/wikitext/";
+                dir = System.getProperty("user.dir") + "/outputJava/wikitext/";
                 format = "wikitext";
                 break;
         }
 
         this.extraction(url, format);
 
-        String path = dir + name +"_1.csv";
+        String path = dir + name + "_1.csv";
         File file = new File(path);
 
         String st;
@@ -213,23 +211,15 @@ public class Controller {
             String[] nextRecord;
             StringBuilder line = new StringBuilder();
 
-            while ((nextRecord = csvReader.readNext()) != null){
+            while ((nextRecord = csvReader.readNext()) != null) {
                 for (String cell : nextRecord) {
                     line.append(cell).append(" ");
                 }
                 result.append(line.toString()).append("\n");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
-
-
-        /*String st;
-        String result = "";*/
-       /* while ((st = br.readLine()) != null) {
-            result += st + "\n";
-        }*/
-
 
         List<String> liste_line = new ArrayList<String>();
         url = url.substring(30, url.length());
@@ -241,23 +231,23 @@ public class Controller {
 
             charger(path);
         }
-
+        ListerRepertoire();
 
     }
 
     private String getNameFromUrl(String url) {
         String str = url;
-        str = str.replace("https://en.wikipedia.org/wiki/","" );
-        str = str.replace("https://fr.wikipedia.org/wiki/","" );
-        str = str.replace("en.wikipedia.org/wiki/","" );
-        str = str.replace("fr.wikipedia.org/wiki/","" );
+        str = str.replace("https://en.wikipedia.org/wiki/", "");
+        str = str.replace("https://fr.wikipedia.org/wiki/", "");
+        str = str.replace("en.wikipedia.org/wiki/", "");
+        str = str.replace("fr.wikipedia.org/wiki/", "");
         return str;
     }
 
-    private void extraction(String url ,String format) {
+    private void extraction(String url, String format) {
         Process mProcess = null;
         try {
-            Process process = Runtime.getRuntime().exec("java -jar " + System.getProperty("user.dir")+"/src/sample/extracteurJava.jar "+ format + " " + url);
+            Process process = Runtime.getRuntime().exec("java -jar " + System.getProperty("user.dir") + "/src/sample/extracteurJava.jar " + format + " " + url);
             mProcess = process;
             process.waitFor();
         } catch (IOException | InterruptedException e) {
@@ -267,13 +257,44 @@ public class Controller {
             InputStream stdout = mProcess.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(stdout, StandardCharsets.UTF_8));
             String line;
-            try{
-                while((line = reader.readLine()) != null){
-                    System.out.println("stdout: "+ line);
+            try {
+                while ((line = reader.readLine()) != null) {
+                    System.out.println("stdout: " + line);
                 }
-            }catch(IOException e){
-                System.out.println("Exception in reading output"+ e.toString());
+            } catch (IOException e) {
+                System.out.println("Exception in reading output" + e.toString());
             }
         }
+    }
+
+    public void displayCSV() {
+        String path;
+        if (cb.getValue() == "Java - WikiText") {
+            path = "./outputJava/wikitext/";
+        }
+        else {
+            path = "./outputJava/html/";
+        }
+        path += cb2.getValue() + ".csv";
+        File file = new File(path);
+
+        StringBuilder result = new StringBuilder();
+
+        try {
+            FileReader fr = new FileReader(file);
+            CSVReader csvReader = new CSVReader(fr);
+            String[] nextRecord;
+            StringBuilder line = new StringBuilder();
+
+            while ((nextRecord = csvReader.readNext()) != null) {
+                for (String cell : nextRecord) {
+                    line.append(cell).append(" ");
+                }
+                result.append(line.toString()).append("\n");
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        charger(path);
     }
 }
