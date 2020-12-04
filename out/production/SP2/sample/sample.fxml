@@ -31,8 +31,8 @@
 
             <Button fx:id="display" layoutX="639.0" layoutY="467.0" mnemonicParsing="false" onAction="#displayValue" prefHeight="47.0" prefWidth="117.0" text="Afficher le csv" />
             <Label layoutX="25.0" layoutY="148.0" prefHeight="24.0" prefWidth="86.0" text="Table number :" />
-            <TextField layoutX="118.0" layoutY="148.0" prefHeight="25.0" prefWidth="58.0" />
             <Label layoutX="605.0" layoutY="207.0" prefHeight="24.0" prefWidth="75.0" text="Differencies :" />
+<<<<<<< HEAD
             <Button layoutX="639.0" layoutY="543.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="117.0" text="Save" onAction="#saveAsList" />
             <!--<TextArea fx:id="ta2" layoutX="25.0" layoutY="199.0" prefHeight="412.0" prefWidth="540.0" />-->
 
@@ -48,6 +48,11 @@
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
             </GridPane>
+=======
+            <Button layoutX="639.0" layoutY="543.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="117.0" text="Save" />
+            <TextArea fx:id="ta2" layoutX="25.0" layoutY="199.0" prefHeight="412.0" prefWidth="540.0" />
+            <ChoiceBox fx:id="cb2" layoutX="117.0" layoutY="148.0" prefHeight="25.0" prefWidth="65.0" />
+>>>>>>> 1c440c8cd7f0df7412032ffd51fb9a4b2421f52e
          </children>
       </Pane>
    </children>
