@@ -7,16 +7,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,7 +53,14 @@ public class Controller {
                 champ.setPrefWidth(250.0);
                 champ.setPrefHeight(100.0);
 
-                champ.setText(fields[j]);
+
+                if (j<= fields.length-1) {
+                    champ.setText(fields[j]);
+                }else {
+                    champ.setText(" ");
+                }
+
+
                 monGridPane.add(champ, j, i);
             }
         }
@@ -115,7 +121,7 @@ public class Controller {
         }
 
         for (int i = 0; i < rows; i++) {
-            List sub = list.subList(0, 3);
+            List sub = list.subList(0, cols);
             List two = new ArrayList<String>(sub);
             sub.clear();
             listCSV.add(two);
@@ -127,7 +133,8 @@ public class Controller {
     public void saveCSV(List<List<String>> data) {
 
         try {
-            CSVWriter writer = new CSVWriter(new FileWriter(System.getProperty("user.dir") + "/finalCSV.csv", false));
+            String name = (new Timestamp(System.currentTimeMillis()).getTime())+ "_finalCSV.csv";
+            CSVWriter writer = new CSVWriter(new FileWriter(System.getProperty("user.dir") + "/generate/"+name, false));
 
 
             for (List<String> l : data) {
@@ -298,3 +305,8 @@ public class Controller {
         charger(path);
     }
 }
+
+/*
+--module-path
+        "/home/sadou/Vidéos/javafx-sdk-11.0.2/lib/"
+        --add-modules=javafx.controls,javafx.fxml*/
