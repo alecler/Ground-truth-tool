@@ -40,7 +40,7 @@ public class Controller {
 
     private void charger(){
 
-        HashMap<Integer, String> file= new TestFonction().fileToMap("src/output/terrain/Esperanto_and_Interlingua_1.csv");
+        HashMap<Integer, String> file= new TestFonction().fileToMap("src/output/generer/Comparison_between_Esperanto_and_Interlingua_0.csv");
 
         int lines = file.size();
         int cols = file.get(0).split("####").length;
