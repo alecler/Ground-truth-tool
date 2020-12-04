@@ -67,7 +67,7 @@ public class TestFonction {
 
             while ((nextRecord = csvReader.readNext()) != null){
                 for (String cell : nextRecord) {
-                    line.append(cell).append(" ");
+                    line.append(cell).append("####");
                 }
                 map.put(k, line.toString());
                 line = new StringBuilder();
