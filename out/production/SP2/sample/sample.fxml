@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -10,7 +11,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<?import javafx.geometry.Insets?>
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <columnConstraints>
       <ColumnConstraints />
@@ -22,21 +22,20 @@
       <Pane prefHeight="662.0" prefWidth="842.0">
          <children>
             <Label layoutX="25.0" layoutY="33.0" prefHeight="24.0" prefWidth="92.0" text="Wikipedia URL :" />
-            <TextField fx:id="goodUrl" layoutX="117.0" layoutY="33.0" prefHeight="25.0" prefWidth="476.0" />
+            <TextField fx:id="goodUrl" layoutX="117.0" layoutY="33.0" onAction="#ListerRepertoire" prefHeight="25.0" prefWidth="476.0" />
             <ChoiceBox fx:id="cb" layoutX="117.0" layoutY="89.0" prefWidth="150.0" />
             <Label layoutX="52.0" layoutY="89.0" prefHeight="25.0" prefWidth="58.0" text="Extractor :" />
-            <TextArea fx:id="ta" layoutX="605.0" layoutY="240.0" prefHeight="134.0" prefWidth="200.0" />
+            <TextArea fx:id="ta" layoutX="605.0" layoutY="255.0" prefHeight="134.0" prefWidth="200.0" />
 
 
 
             <Button fx:id="display" layoutX="639.0" layoutY="467.0" mnemonicParsing="false" onAction="#displayValue" prefHeight="47.0" prefWidth="117.0" text="Afficher le csv" />
             <Label layoutX="25.0" layoutY="148.0" prefHeight="24.0" prefWidth="86.0" text="Table number :" />
-            <TextField layoutX="118.0" layoutY="148.0" prefHeight="25.0" prefWidth="58.0" />
             <Label layoutX="605.0" layoutY="207.0" prefHeight="24.0" prefWidth="75.0" text="Differencies :" />
-            <Button layoutX="639.0" layoutY="543.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="117.0" text="Save" onAction="#saveAsList" />
+            <Button layoutX="639.0" layoutY="543.0" mnemonicParsing="false" onAction="#saveAsList" prefHeight="47.0" prefWidth="117.0" text="Save" />
             <!--<TextArea fx:id="ta2" layoutX="25.0" layoutY="199.0" prefHeight="412.0" prefWidth="540.0" />-->
 
-            <GridPane fx:id="monGridPane" gridLinesVisible="true" layoutX="25.0" layoutY="199.0" prefHeight="412.0" prefWidth="540.0"  style="-fx-background-color: rgb(156,150,149);">
+            <GridPane fx:id="monGridPane" gridLinesVisible="true" layoutX="25.0" layoutY="199.0" prefHeight="412.0" prefWidth="540.0" style="-fx-background-color: rgb(156,150,149);">
                <children>
 
 
@@ -48,6 +47,7 @@
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
             </GridPane>
+            <ChoiceBox fx:id="cb2" layoutX="117.0" layoutY="148.0" prefWidth="150.0" />
          </children>
       </Pane>
    </children>

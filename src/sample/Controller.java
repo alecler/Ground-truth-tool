@@ -11,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -24,6 +23,8 @@ public class Controller {
     ObservableList list = FXCollections.observableArrayList("Java - Wikitext", "Java - HTML", "Python - HTML");
     @FXML
     private ChoiceBox<String> cb;
+    @FXML
+    private ChoiceBox<String> cb2;
     @FXML
     private TextArea ta;
     @FXML
@@ -38,29 +39,46 @@ public class Controller {
         cb.setItems(list);
     }
 
-    private void charger(){
+    private void charger() {
 
-        HashMap<Integer, String> file= new TestFonction().fileToMap("src/output/generer/Comparison_between_Esperanto_and_Interlingua_0.csv");
+        HashMap<Integer, String> file = new TestFonction().fileToMap("src/output/generer/Comparison_between_Esperanto_and_Interlingua_0.csv");
 
         int lines = file.size();
         int cols = file.get(0).split("####").length;
 
         monGridPane.getChildren().clear();
 
-        for (int i=0; i<lines;i++){
+        for (int i = 0; i < lines; i++) {
             String[] fields = file.get(i).split("####");
-            for (int j=0;j<cols;j++){
+            for (int j = 0; j < cols; j++) {
                 TextField champ = new TextField();
                 champ.setPrefWidth(250.0);
                 champ.setPrefHeight(100.0);
 
                 champ.setText(fields[j]);
-                monGridPane.add(champ,j,i);
+                monGridPane.add(champ, j, i);
             }
         }
+    }
 
+    public void ListerRepertoire(){
+        File repertoire = new File("C:/Users/cleme/IdeaProjects/Ground-truth-tool/src/output/generer");
+        ObservableList list1 = FXCollections.observableArrayList();
+        String liste[] = repertoire.list();
 
-
+        if (liste != null) {
+            for (int i = 0; i < liste.length; i++) {
+                String url = liste[i].substring(0, liste[i].length()-4);
+                String url1 = goodUrl.getText();
+                url1 = url1.substring(30, url1.length());
+                if (url.contains(url1)) {
+                    list1.add(url);
+                }
+            }
+        } else {
+            System.err.println("Nom de repertoire invalide");
+        }
+        cb2.setItems(list1);
     }
 
     public void saveAsList(){
@@ -152,7 +170,6 @@ public class Controller {
 
             charger();
         }
-
-
+        ListerRepertoire();
     }
 }
