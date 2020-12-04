@@ -1,4 +1,9 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.RoundingMode;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,33 +11,26 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String str1 = "Alphabet uses diacritics (ĉ, ĝ, ĥ, ĵ, ŝ, ŭ) does not use diacritics ";
-        String str2 = "Alphabet uses diacritics (ĉ, ĝ, ĥ, ĵ, ŝ, ŭ) does not use diacritics ";
-
-        boolean equal = str1.equalsIgnoreCase(str2);
-
-        List<String> list = new ArrayList<>();
-        list.add("a");
-        list.add("b");
-        list.add("c");
-        list.add("d");
-        list.add("e");
-        list.add("f");
-        list.add("g");
-        list.add("h");
-
-        for (int i = 0; i < 4; i++) {
-            List sub=list.subList(0,2);
-            List two=new ArrayList<String>(sub);
-            sub.clear();
-            System.out.println(two);
+        Process mProcess = null;
+        try {
+            Process process = Runtime.getRuntime().exec("java -jar extracteurs/extracteurJava.jar wikitext https://en.wikipedia.org/wiki/France");
+            mProcess = process;
+            process.waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
         }
-
-
-
-
-
-
+        if (mProcess != null) {
+            InputStream stdout = mProcess.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stdout, StandardCharsets.UTF_8));
+            String line;
+            try{
+                while((line = reader.readLine()) != null){
+                    System.out.println("stdout: "+ line);
+                }
+            }catch(IOException e){
+                System.out.println("Exception in reading output"+ e.toString());
+            }
+        }
 
     }
 }

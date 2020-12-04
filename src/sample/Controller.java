@@ -12,6 +12,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -39,9 +40,9 @@ public class Controller {
         cb.setItems(list);
     }
 
-    private void charger() {
+    private void charger(String path){
 
-        HashMap<Integer, String> file = new TestFonction().fileToMap("src/output/generer/Comparison_between_Esperanto_and_Interlingua_0.csv");
+        HashMap<Integer, String> file= new TestFonction().fileToMap(path);
 
         int lines = file.size();
         int cols = file.get(0).split("####").length;
@@ -108,7 +109,7 @@ public class Controller {
     public void saveCSV(List<List<String>> data){
 
         try {
-            CSVWriter writer = new CSVWriter(new FileWriter("./test.csv", false));
+            CSVWriter writer = new CSVWriter(new FileWriter(System.getProperty("user.dir")+"", false));
 
 
             for(List<String> l: data){
@@ -168,8 +169,111 @@ public class Controller {
             ta.setText("Vous avez choisi : " + extractor + "\n" + "Ouverture de la page : " + url);
             /*ta2.setText(result.toString());*/
 
-            charger();
+//            charger();
         }
         ListerRepertoire();
+    }
+
+    public void displayExtractedFile() throws IOException {
+
+
+
+        String extractor = cb.getValue();
+        String url = goodUrl.getText();
+        String dir = "outputPython/";
+        String name = getNameFromUrl(url);
+        String format = "html";
+        //BufferedReader br = new BufferedReader(new FileReader(file));
+
+        switch (extractor) {
+            case "Python - HTML":
+                dir = "outputPython/";
+                break;
+            case "Java - HTML":
+                dir = System.getProperty("user.dir")+"/outputJava/html/";
+                format = "html";
+                break;
+            case "Java - Wikitext":
+                dir = System.getProperty("user.dir")+"/outputJava/wikitext/";
+                format = "wikitext";
+                break;
+        }
+
+        this.extraction(url, format);
+
+        String path = dir + name +"_1.csv";
+        File file = new File(path);
+
+        String st;
+        StringBuilder result = new StringBuilder();
+
+        try {
+            FileReader fr = new FileReader(file);
+            CSVReader csvReader = new CSVReader(fr);
+            String[] nextRecord;
+            StringBuilder line = new StringBuilder();
+
+            while ((nextRecord = csvReader.readNext()) != null){
+                for (String cell : nextRecord) {
+                    line.append(cell).append(" ");
+                }
+                result.append(line.toString()).append("\n");
+            }
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
+
+
+        /*String st;
+        String result = "";*/
+       /* while ((st = br.readLine()) != null) {
+            result += st + "\n";
+        }*/
+
+
+        List<String> liste_line = new ArrayList<String>();
+        url = url.substring(30, url.length());
+        if (extractor == null) {
+            ta.setText("Select an extractor");
+        } else {
+            ta.setText("Vous avez choisi : " + extractor + "\n" + "Ouverture de la page : " + url);
+            /*ta2.setText(result.toString());*/
+
+            charger(path);
+        }
+
+
+    }
+
+    private String getNameFromUrl(String url) {
+        String str = url;
+        str = str.replace("https://en.wikipedia.org/wiki/","" );
+        str = str.replace("https://fr.wikipedia.org/wiki/","" );
+        str = str.replace("en.wikipedia.org/wiki/","" );
+        str = str.replace("fr.wikipedia.org/wiki/","" );
+        return str;
+    }
+
+    private void extraction(String url ,String format) {
+        Process mProcess = null;
+        try {
+            Process process = Runtime.getRuntime().exec("java -jar " + System.getProperty("user.dir")+"/src/sample/extracteurJava.jar "+ format + " " + url);
+            mProcess = process;
+            process.waitFor();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (mProcess != null) {
+            InputStream stdout = mProcess.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stdout, StandardCharsets.UTF_8));
+            String line;
+            try{
+                while((line = reader.readLine()) != null){
+                    System.out.println("stdout: "+ line);
+                }
+            }catch(IOException e){
+                System.out.println("Exception in reading output"+ e.toString());
+            }
+        }
     }
 }
