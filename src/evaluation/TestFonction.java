@@ -52,7 +52,7 @@ public class TestFonction {
         return cols;
     }
 
-    public HashMap<Integer, String> fileToMap(String file){
+    public static HashMap<Integer, String> fileToMap(String file){
 
         HashMap<Integer, String> map = new HashMap<Integer, String>();
         int k =0;

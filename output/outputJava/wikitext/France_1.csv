@@ -1,0 +1,10 @@
+scope=col  Ville,scope=col  Aire urbaine,scope=col  Pôle urbain,scope=col  Commune
+scope=row  Paris,12628266,10784830,2187526
+scope=row  Lyon,2323221,1659001,516092
+scope=row  Marseille et Aix-en-Provence,1760653,1590867,863310142482
+scope=row  Toulouse,1360829,968638,479553
+scope=row  Bordeaux,1247977,927445,254436
+scope=row  Lille,1191117,1043621,232787
+scope=row  Nice,1006201,942886,340017
+scope=row  Nantes,972828,650081,309346
+scope=row  Strasbourg,790087

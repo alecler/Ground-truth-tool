@@ -11,6 +11,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import junit.framework.Test;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -38,8 +39,7 @@ public class Controller {
     }
 
     private void charger(String path) {
-
-        HashMap<Integer, String> file = new TestFonction().fileToMap(path);
+        HashMap<Integer, String> file = TestFonction.fileToMap(path);
 
         int lines = file.size();
         int cols = file.get(0).split("####").length;
@@ -186,20 +186,21 @@ public class Controller {
     public void displayExtractedFile() throws IOException {
         String extractor = cb.getValue();
         String url = goodUrl.getText();
-        String dir = "outputPython/";
+        String dir = System.getProperty("user.dir") + "/src/sample/outputPy/";
         String name = getNameFromUrl(url);
         String format = "html";
 
         switch (extractor) {
             case "Python - HTML":
-                dir = "outputPython/";
+                dir = System.getProperty("user.dir") + "/output/outputPy/";
+                format = "python";
                 break;
             case "Java - HTML":
-                dir = System.getProperty("user.dir") + "/outputJava/html/";
+                dir = System.getProperty("user.dir") + "/output/outputJava/html/";
                 format = "html";
                 break;
             case "Java - Wikitext":
-                dir = System.getProperty("user.dir") + "/outputJava/wikitext/";
+                dir = System.getProperty("user.dir") + "/output/outputJava/wikitext/";
                 format = "wikitext";
                 break;
         }
@@ -254,7 +255,12 @@ public class Controller {
     private void extraction(String url, String format) {
         Process mProcess = null;
         try {
-            Process process = Runtime.getRuntime().exec("java -jar " + System.getProperty("user.dir") + "/src/sample/extracteurJava.jar " + format + " " + url);
+            Process process;
+            if (format == "python") {
+                process = Runtime.getRuntime().exec("python " + System.getProperty("user.dir") + "/src/sample/WikiExtractor-Python.pyz "+ url);
+            } else {
+                process = Runtime.getRuntime().exec("java -jar " + System.getProperty("user.dir") + "/src/sample/extracteurJava.jar " + format + " " + url);
+            }
             mProcess = process;
             process.waitFor();
         } catch (IOException | InterruptedException e) {
